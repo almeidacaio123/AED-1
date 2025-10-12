@@ -1,40 +1,43 @@
 #include <stdio.h>
 
-int main() {
-    char stack[1000];  
-    int tp;
+#define T_PILHA 512
+
+int main(void) {
     int c;
 
     while (1) {
-        tp = -1;
-        int ok = 1;
+        char pilha[T_PILHA];
+        int topo = -1;
+        int ok = 1, any = 0;
 
         while ((c = getchar()) != EOF && c != '\n') {
+            any = 1;
+
             if (c == '(') {
-                if (tp < 999) {
-                    tp++;
-                    stack[tp] = '(';
+                if (topo < T_PILHA - 1) {
+                    topo++;
+                    pilha[topo] = '(';
                 } else {
-                    ok = 0; 
+                    ok = 0;
                 }
             } else if (c == ')') {
-                if (tp == -1) {
-                    ok = 0; 
+                if (topo == -1) {
+                    ok = 0;
                 } else {
-                    tp--;   
+                    topo--;
                 }
             }
         }
 
-        if (c == EOF) break;
+        if (!any && c == EOF) break;
 
-        if (ok && tp == -1) {
+        if (ok && topo == -1) {
             printf("correct\n");
         } else {
             printf("incorrect\n");
         }
-    }
 
+        if (c == EOF) break;
+    }
     return 0;
 }
-
