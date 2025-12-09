@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_S 100005
+#define MAX_LEN 105
+
+// Vetor estático grande para evitar Stack Overflow
+char jewels[MAX_S][MAX_LEN];
+
+int compare(const void *a, const void *b) {
+    return strcmp((char*)a, (char*)b);
+}
+
+int main() {
+    int n = 0;
+    
+    // Leitura até EOF
+    while (scanf("%s", jewels[n]) != EOF) {
+        n++;
+    }
+
+    if (n == 0) {
+        printf("0\n");
+        return 0;
+    }
+
+    // Ordena as strings
+    qsort(jewels, n, MAX_LEN * sizeof(char), compare);
+
+    // Conta as únicas
+    int unique = 1;
+    for (int i = 1; i < n; i++) {
+        if (strcmp(jewels[i], jewels[i-1]) != 0) {
+            unique++;
+        }
+    }
+
+    printf("%d\n", unique);
+
+    return 0;
+}
